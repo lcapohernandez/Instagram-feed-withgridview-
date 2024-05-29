@@ -1,257 +1,267 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Instagram Clone</title>
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <style>
-    body {
-      padding-top: 80px; /* Added space for logo */
-      background-color: #f8f9fa; /* Added subtle background color */
-    }
-    .post-container {
-      border: 1px solid #ccc; /* Added border to post container */
-      border-radius: 10px; /* Added border radius */
-      overflow: hidden; /* Hide overflow content */
-      position: relative; /* Position relative for footer */
-    }
-    .post {
-      display: none; /* Initially hide posts */
-      margin-bottom: 20px; /* Added margin between posts */
-      background-color: #fff; /* Added background color to posts */
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Added box shadow */
-    }
-    .post.active {
-      display: block; /* Show active post */
-    }
-    .grid-view {
-      display: none; /* Initially hide grid view */
-    }
-    .grid-view.active {
-      display: grid; /* Show grid view */
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid layout */
-      gap: 20px; /* Gap between grid items */
-    }
-    .post img {
-      max-width: 100%; /* Make images responsive */
-      border-bottom: 1px solid #ccc; /* Added border to images */
-    }
-    .post-footer {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 10px;
-      border-top: 1px solid #ccc;
-    }
-    .footer-text {
-      font-size: 14px;
-    }
-    .logo-container {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    .config-button {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      padding: 10px;
-      font-size: 18px;
-      cursor: pointer;
-    }
-    .new-post-button {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-    }
-    .footer-text {
-      font-size: 14px;
-    }
-    .grid-view img {
-      max-width: calc(100% - 20px); /* Adjust image width to fit grid */
-    }
-    /* Font Family */
-    h1,
-    button.btn {
-      font-family: 'Billabong', sans-serif;
-    }
-    /* Black and White Buttons */
-    button.btn {
-      background-color: #fff;
-      color: #000;
-    }
-  </style>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>The Instagram Photo Feed (with Bootstrap)</title>
 </head>
+
 <body>
-
-<div class="container">
-  <div class="logo-container">
-    <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="Instagram Logo">
-  </div>
-  <div class="new-post-button">
-    <button class="btn btn-success" data-toggle="modal" data-target="#newPostModal"><i class="fas fa-plus"></i> New Post</button>
-  </div>
-  <div class="config-button">
-    <button class="btn btn-lg"><i class="fas fa-cog"></i></button>
-  </div>
-  <div class="row justify-content-center mt-5">
-    <div class="col-md-8 text-center">
-      <h1>Instagram Clone</h1>
-      <button class="btn btn-primary mb-2" onclick="showSinglePost()"><i class="fas fa-square"></i></button>
-      <button class="btn btn-primary mb-2" onclick="showGridView()"><i class="fas fa-th"></i></button>
-    </div>
-  </div>
-  <div class="row justify-content-center mt-3">
-    <div class="col-md-8">
-      <div class="post-container">
-        <div class="post active"> <!-- Single post view -->
-          <img src="https://images.pexels.com/photos/885021/pexels-photo-885021.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Post 1">
-          <div class="post-footer">
-            <p class="footer-text">Description for Post 1</p>
-          </div>
+    <div class="navbar navbar-light bg-light fixed-top">
+        <div class="container d-flex justify-content-between">
+            <a href="index.html" class="navbar-brand d-flex align-items-center">
+                <i class="fab fa-instagram text-secondary fa-3x"></i>
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F2%2F2a%2FInstagram_logo.svg%2F1280px-Instagram_logo.svg.png&f=1&nofb=1"
+                    with="42em" height="42em">
+            </a>
+            <div class="form-inline">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createModalNewPost">
+                    Create a new post
+                </button>
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Log Out</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="grid-view active"> <!-- Grid view -->
-          <div class="row">
-            <div class="col-md-6 col-md-8 mb-6">
-              <img src="https://images.pexels.com/photos/1752806/pexels-photo-1752806.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Post 1">
-              <div class="post-footer">
-                <p class="footer-text">Description for Post 1</p>
-              </div>
-          </div>      
-            <div class="col-md-6 col-md-8 mb-6">
-              <img src="https://images.pexels.com/photos/1907071/pexels-photo-1907071.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Post 2">
-              <div class="post-footer">
-                <p class="footer-text">Description for Post 2</p>
-              </div>
-            </div>
-            <div class="col-md-6 col-md-8 mb-6">
-              <img src="https://images.pexels.com/photos/1254655/pexels-photo-1254655.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Post 3">
-              <div class="post-footer">
-                <p class="footer-text">Description for Post 3</p>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6 col-md-8 mb-6">
-              <img src="https://images.pexels.com/photos/1254655/pexels-photo-1254655.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Post 3">
-              <div class="post-footer">
-                <p class="footer-text">Description for Post 3</p>
-              </div>
-            </div>
-            <div class="col-md-6 col-md-8 mb-6">
-              <img src="https://images.pexels.com/photos/1254655/pexels-photo-1254655.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Post 3">
-              <div class="post-footer">
-                <p class="footer-text">Description for Post 3</p>
-              </div>
-            </div>
-            <div class="col-md-6 col-md-8 mb-6">
-              <img src="https://images.pexels.com/photos/1254655/pexels-photo-1254655.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Post 3">
-              <div class="post-footer">
-                <p class="footer-text">Description for Post 3</p>
-              </div>
-            </div>
-          </div>
-          <div class="row>
-
-         
-            <div class="col-md-6 col-md-8 mb-6">
-              <img src="https://images.pexels.com/photos/1254655/pexels-photo-1254655.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Post 3">
-              <div class="post-footer">
-                <p class="footer-text">Description for Post 3</p>
-              </div>
-            </div>
-            <div class="col-md-6 col-md-8 mb-6">
-              <img src="https://images.pexels.com/photos/1254655/pexels-photo-1254655.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Post 3">
-              <div class="post-footer">
-                <p class="footer-text">Description for Post 3</p>
-              </div>
-            </div>
-            <div class="col-md-6 col-md-8 mb-6">
-              <img src="https://images.pexels.com/photos/1254655/pexels-photo-1254655.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Post 3">
-              <div class="post-footer">
-                <p class="footer-text">Description for Post 3</p>
-              </div>
-            </div>
-          </div>
-          <div class="row"> 
-            <div class="col-md-6 col-md-8 mb-6">
-              <img src="https://images.pexels.com/photos/1254655/pexels-photo-1254655.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Post 3">
-              <div class="post-footer">
-                <p class="footer-text">Description for Post 3</p>
-              </div>
-            </div>
-            <div class="col-md-6 col-md-8 mb-6">
-              <img src="https://images.pexels.com/photos/1254655/pexels-photo-1254655.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Post 3">
-              <div class="post-footer">
-                <p class="footer-text">Description for Post 3</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
     </div>
-  </div>
-</div>
 
-<!-- New Post Modal -->
-<div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="newPostModalLabel">New Post</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- Your new post form goes here -->
-        <form>
-          <div class="form-group">
-            <label for="postImage">Image URL:</label>
-            <input type="text" class="form-control" id="postImage" placeholder="Enter image URL">
-          </div>
-          <div class="form-group">
-            <label for="postDescription">Description:</label>
-            <textarea class="form-control" id="postDescription" rows="3" placeholder="Enter description"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Post</button>
-      </div>
+    <main class="mt-5 pt-5" role="main">
+        <div class="container-fluid">
+            <div class="nav flex-row nav-pills justify-content-center py-2" id="v-pills-tab" role="tablist"
+                aria-orientation="horizontal">
+                <a class="nav-link active bg-light mr-1" id="v-pills-grid-tab" data-toggle="pill" href="#v-pills-grid"
+                    role="tab" aria-controls="v-pills-grid" aria-selected="true">
+                    <i class="fas fa-th fa-1x text-secondary shadow-lg"></i>
+                </a>
+                <a class="nav-link bg-light" id="v-pills-cards-tab" data-toggle="pill" href="#v-pills-cards" role="tab"
+                    aria-controls="v-pills-cards" aria-selected="false">
+                    <i class="fas fa-square fa-1x text-secondary"></i>
+                </a>
+            </div>
+
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-grid" role="tabpanel" aria-labelledby="v-pills-grid-tab">
+                    <div class="row">
+                        <div class="col-12 col-md-4 px-0">
+                            <div class="card">
+                                <img class="img-fit"
+                                    src="https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                                    alt="Coffee">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 px-0">
+                            <div class="card">
+                                <img class="img-fit"
+                                    src="https://images.pexels.com/photos/2023384/pexels-photo-2023384.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                                    alt="Puppy">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 px-0">
+                            <div class="card">
+                                <img class="img-fit"
+                                    src="https://images.pexels.com/photos/994605/pexels-photo-994605.jpeg?auto=compress&cs=tinysrgb&w=800"
+                                    alt="Beach">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-4 px-0">
+                            <div class="card">
+                                <img class="img-fit"
+                                    src="https://images.pexels.com/photos/9891049/pexels-photo-9891049.jpeg?auto=compress&cs=tinysrgb&w=800"
+                                    alt="Dragon">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 px-0">
+                            <div class="card">
+                                <img class="img-fit"
+                                    src="https://images.pexels.com/photos/5274758/pexels-photo-5274758.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                                    alt="Caribe>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 px-0">
+                            <div class="card">
+                                <img class="img-fit"
+                                    src="https://images.pexels.com/photos/160583/capybara-group-eat-meadow-160583.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                                    alt="Capibara family">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-4 px-0">
+                            <div class="card">
+                                <img class="img-fit"
+                                    src="https://images.pexels.com/photos/24375084/pexels-photo-24375084/free-photo-of-a-border-collie-dog-standing-on-a-meadow-with-flowers.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                                    alt="Border collie">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 px-0">
+                            <div class="card">
+                                <img class="img-fit"
+                                    src="https://images.pexels.com/photos/7210354/pexels-photo-7210354.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                                    alt="Card image cap">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 px-0">
+                            <div class="card">
+                                <img class="img-fit"
+                                    src="https://images.pexels.com/photos/1490908/pexels-photo-1490908.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                                    alt="Card image cap">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="tab-pane fade" id="v-pills-cards" role="tabpanel" aria-labelledby="v-pills-cards-tab">
+                    <div class="row bg-light py-4">
+
+                        <div class="container">
+                            <div class="row justify-content-md-center">
+                                <div class="col-md-8 mx-auto pt-3">
+                                    <div class="card">
+                                        <div class="card-header bg-white d-flex justify-content-between">
+                                            <h4>My first photo</h4>
+                                            <span class="text-muted">12/1</span>
+                                        </div>
+                                        <img class="card-img-top"
+                                            src="https://images.pexels.com/photos/1263986/pexels-photo-1263986.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                                            alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-dark">83 Likes</h5>
+                                            <p class="card-text">This is a wider card with supporting text below as a
+                                                natural lead-in to additional content. This content is a little bit
+                                                longer.</p>
+                                            <p class="card-text"><span class="text-muted mr-2"><i
+                                                        class="far fa-heart fa-1x"></i></span><span
+                                                    class="text-muted">Comment...</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 mx-auto pt-3">
+                                    <div class="card">
+                                        <div class="card-header bg-white d-flex justify-content-between">
+                                            <h4>My first photo</h4>
+                                            <span class="text-muted">12/2</span>
+                                        </div>
+                                        <img class="card-img-top" src="https://images.pexels.com/photos/1060489/pexels-photo-1060489.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-dark">83 Likes</h5>
+                                            <p class="card-text">This is a wider card with supporting text below as a
+                                                natural lead-in to additional content. This content is a little bit
+                                                longer.</p>
+                                            <p class="card-text"><span class="text-muted mr-2"><i
+                                                        class="far fa-heart fa-1x"></i></span><span
+                                                    class="text-muted">Comment...</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 mx-auto pt-3">
+                                    <div class="card">
+                                        <div class="card-header bg-white d-flex justify-content-between">
+                                            <h4>My first photo</h4>
+                                            <span class="text-muted">12/3</span>
+                                        </div>
+                                        <img class="card-img-top" src="https://images.pexels.com/photos/1805164/pexels-photo-1805164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-dark">83 Likes</h5>
+                                            <p class="card-text">This is a wider card with supporting text below as a
+                                                natural lead-in to additional content. This content is a little bit
+                                                longer.</p>
+                                            <p class="card-text"><span class="text-muted mr-2"><i class="far fa-heart fa-1x"></i></span><span class="text-muted">Comment...</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-8 mx-auto pt-3">
+                                    <div class="card">
+                                        <div class="card-header bg-white d-flex justify-content-between">
+                                            <h4>My first photo</h4>
+                                            <span class="text-muted">12/4</span>
+                                        </div>
+                                        <img class="card-img-top"
+                                            src="https://images.pexels.com/photos/410856/pexels-photo-410856.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                                            alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-dark">83 Likes</h5>
+                                            <p class="card-text">This is a wider card with supporting text below as a
+                                                natural lead-in to additional content. This content is a little bit
+                                                longer.</p>
+                                            <p class="card-text"><span class="text-muted mr-2"><i
+                                                        class="far fa-heart fa-1x"></i></span><span
+                                                    class="text-muted">Comment...</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="createModalNewPost" tabindex="-1" role="dialog"
+        aria-labelledby="createModalNewPostTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form>
+                    <i class="fas fa-camera fa-border"></i>
+                    <i class="fas fa-map-marker-alt fa-border"></i>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">cancel</button>
+                    <button type="button" class="btn btn-success">publish</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-
-<!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- Font Awesome -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
-<script>
-  function showSinglePost() {
-    document.querySelector('.post').classList.add('active');
-    document.querySelector('.grid-view').classList.remove('active');
-  }
-
-  function showGridView() {
-    document.querySelector('.grid-view').classList.add('active');
-    document.querySelector('.post').classList.remove('active');
-  }
-</script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
-
-
